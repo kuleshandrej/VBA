@@ -1,0 +1,32 @@
+'---------------------------------------------------------------------------------------------------------
+'   Kulesh Andrei
+'   01.07.2021
+'   PrintControlCaption     VBA Excel
+'   ... printing control.Caption letter by letter, from left to right at a set print speed
+'---------------------------------------------------------------------------------------------------------
+Sub PrintControlCaption(control As control, Optional pauseTime = 0.05)
+
+Dim str$, ln%, i%
+
+    str = control.Caption
+    ln = Len(str)
+
+Dim start, finish
+
+    For i = ln To 0 Step -1
+    
+        pauseTime = pauseTime   ' Set duration.
+        start = Timer           ' Set start time.
+        
+        Do While Timer < start + pauseTime
+         
+            DoEvents            ' Yield to other processes.
+              
+        Loop
+        
+        finish = Timer          ' Set end time.
+        control.Caption = left(str, ln - i)
+        
+    Next i
+
+End Sub
